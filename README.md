@@ -23,3 +23,8 @@ To perform a serious run, you'll have to change the `.py` file to load the speci
 - Flash Attention 2.7.0
 
 All of this is available on the singularity container: /scratch/project_465002038/environment/containers/rocm624_torch271.sif
+
+## Gotchas
+
+- **Flash Attention requires explicit `"dtype": "bfloat16"`** in `model_init_kwargs` — otherwise you get dtype mismatch errors at runtime.
+- **Stale torch extension cache** — if you get mysterious crashes between runs, try clearing `~/.cache/torch_extensions` and `~/.aiter/jit/build`. These can hold broken JIT artifacts from previous failed builds.

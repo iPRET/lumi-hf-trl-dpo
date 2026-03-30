@@ -15,6 +15,8 @@ SEQ_LENGTH = 8192  # tokens per sample
 # Tokenizer
 # ---------------------------------------------------------------------------
 tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+# TRL requires pad_token_id to be set, but many models don't ship with one.
+# Without this you get: ValueError: `pad_token_id` is missing in the `processing_class`.
 tokenizer.pad_token = tokenizer.eos_token
 
 # ---------------------------------------------------------------------------
@@ -51,7 +53,7 @@ ds_config = {
 # ---------------------------------------------------------------------------
 training_args = DPOConfig(
     output_dir=OUTPUT_DIR,
-    max_length=MAX_LENGTH,
+    max_length=MAX_LENGTH,  # defaults to 1024 if not set — will silently clip your sequences
     bf16=True,
     deepspeed=ds_config,
     per_device_train_batch_size=1,
@@ -60,6 +62,7 @@ training_args = DPOConfig(
         "dtype": "bfloat16",
     },
     gradient_checkpointing=True,
+    num_train_epochs=1,  # defaults to 3 if not set
 )
 
 trainer = DPOTrainer(
