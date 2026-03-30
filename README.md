@@ -1,14 +1,25 @@
 # lumi-hf-trl-dpo
 
-Scripts and configuration for running [HF TRL](https://github.com/huggingface/trl) DPO (Direct Preference Optimization) training on the [LUMI supercomputer](https://www.lumi-supercomputer.eu/).
+Example scripts for running [HF TRL](https://github.com/huggingface/trl) [DPO](https://huggingface.co/docs/trl/dpo_trainer) training on the [LUMI supercomputer](https://www.lumi-supercomputer.eu/) with TildeOpen64K.
 
-## Examples
+## Running
 
-- **[8ki_8node](examples/8ki_8node/)** — 8-node (64 GPU) DPO training with 8192-token samples using DeepSpeed ZeRO-3
+To run the example just clone the thing on LUMI and run:
 
-## Software stack
+```bash
+cd examples/8ki_8node/
+./submit_and_tail.sh launch.sh
+```
+
+This runs HF TRL DPO on 640 mock samples, of roughly 8192 token length, over 8 LUMI GPU nodes.
+
+To perform a serious run, you'll have to change the `.py` file to load the specific data you want to load.
+
+## Setup I tested on:
 
 - PyTorch 2.7.1 + ROCm 6.2.4
 - Transformers 5.0.0
 - TRL 0.29.0
 - Flash Attention 2.7.0
+
+All of this is available on the singularity container: /scratch/project_465002038/environment/containers/rocm624_torch271.sif
