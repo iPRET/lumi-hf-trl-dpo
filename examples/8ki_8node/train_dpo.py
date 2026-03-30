@@ -17,7 +17,9 @@ SEQ_LENGTH = 8192  # tokens per sample
 tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
 # TRL requires pad_token_id to be set, but many models don't ship with one.
 # Without this you get: ValueError: `pad_token_id` is missing in the `processing_class`.
-tokenizer.pad_token = tokenizer.eos_token
+# We set it by ID rather than by string to avoid registering a special token
+# that could be injected through user input.
+tokenizer.pad_token_id = 48  # eos token id
 
 # ---------------------------------------------------------------------------
 # Dataset — replace this with your real preference data
