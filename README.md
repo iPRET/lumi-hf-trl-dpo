@@ -2,6 +2,13 @@
 
 Example scripts for running [HF TRL](https://github.com/huggingface/trl) [DPO](https://huggingface.co/docs/trl/dpo_trainer) training on the [LUMI supercomputer](https://www.lumi-supercomputer.eu/) with TildeOpen64K.
 
+Memory hacks used:
+
+- The setup uses ZeRO stage 3. This shards parameters, gradients and optimizer states across (afaik)all processes.
+- DPOTrainer's built in gradient_checkpointing.
+
+Unfortunately attempts to perform tensor parallelism and pipeline parallelism failed.
+
 ## Running
 
 To run the example just clone the thing on LUMI and run:
