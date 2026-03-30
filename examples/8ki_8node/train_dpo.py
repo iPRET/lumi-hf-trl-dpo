@@ -1,4 +1,4 @@
-from transformers import LlamaTokenizer
+from transformers import AutoTokenizer
 from trl import DPOTrainer, DPOConfig
 from datasets import Dataset
 
