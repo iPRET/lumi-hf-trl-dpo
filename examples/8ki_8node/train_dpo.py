@@ -19,7 +19,7 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
 # Without this you get: ValueError: `pad_token_id` is missing in the `processing_class`.
 # We set it by ID rather than by string to avoid registering a special token
 # that could be injected through user input.
-tokenizer.pad_token_id = 48  # eos token id
+tokenizer.pad_token_id = 48  # TildeOpen30B eos token id
 
 # ---------------------------------------------------------------------------
 # Dataset — replace this with your real preference data
