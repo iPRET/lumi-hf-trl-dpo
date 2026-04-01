@@ -4,7 +4,7 @@ Example scripts for running [HF TRL](https://github.com/huggingface/trl) [DPO](h
 
 Memory hacks used:
 
-- The setup uses ZeRO stage 3. This shards parameters, gradients and optimizer states across (afaik)all processes.
+- The setup uses ZeRO stage 3. This shards parameters, gradients and optimizer states across (afaik) all processes.
 - DPOTrainer's built in gradient_checkpointing.
 
 Unfortunately attempts to perform tensor parallelism and pipeline parallelism failed.
@@ -18,7 +18,11 @@ cd examples/8ki_8node/
 ./submit_and_tail.sh launch.sh
 ```
 
-This runs HF TRL DPO on 640 mock samples, of roughly 8192 token length, over 8 LUMI GPU nodes.
+This runs HF TRL DPO on 640 mock samples (640 pairs), of roughly 8192 token length, over 8 LUMI GPU nodes.
+
+Performance comes out to about 492 tokens / second / GPU.
+- GPU stands for 1x physical GPU, which is the same as 2x virtual GPUs.
+- This is when taking into account positive and negative sample tokens separately.
 
 To perform a serious run, you'll have to change the `.py` file to load the specific data you want to load.
 
